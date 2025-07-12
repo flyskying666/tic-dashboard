@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>检验检测行业信息面板 - 每日速览</title>
+    <title>检验检测行业信息面板 V2.0 - 每日速览</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen py-8">
     <div class="container mx-auto px-4 max-w-6xl">
         <!-- 主标题 -->
-        <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">检验检测行业信息面板</h1>
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">检验检测行业信息面板 V2.0</h1>
         
         <!-- 三个内容板块 -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -17,100 +17,145 @@
             <!-- 板块一：政策与法规 -->
             <div class="bg-white rounded-lg shadow-lg p-6">
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-b border-gray-200 pb-2">政策与法规</h2>
-                <ul class="space-y-3">
-                    <li>
-                        <a href="https://www.samr.gov.cn/" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            国家市场监督管理总局 (SAMR)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.cnca.gov.cn/" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            中国国家认证认可监督管理委员会 (CNCA)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://news.google.com/search?q=检验检测+政策&hl=zh-CN&gl=CN&ceid=CN:zh" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            Google 新闻搜索：检验检测 政策
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://news.google.com/search?q=检验检测+法规&hl=zh-CN&gl=CN&ceid=CN:zh" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            Google 新闻搜索：检验检测 法规
-                        </a>
-                    </li>
-                </ul>
+                <ul id="policy-news-list" class="space-y-3"></ul>
             </div>
             
             <!-- 板块二：行业与收并购动态 -->
             <div class="bg-white rounded-lg shadow-lg p-6">
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-b border-gray-200 pb-2">行业与收并购动态</h2>
-                <ul class="space-y-3">
-                    <li>
-                        <a href="https://news.google.com/search?q=检验检测行业+动态&hl=zh-CN&gl=CN&ceid=CN:zh" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            Google 新闻搜索：检验检测行业 动态
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://news.google.com/search?q=检验检测+收并购&hl=zh-CN&gl=CN&ceid=CN:zh" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            Google 新闻搜索：检验检测 收并购
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://news.google.com/search?q=第三方检测+市场分析&hl=zh-CN&gl=CN&ceid=CN:zh" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            Google 新闻搜索：第三方检测 市场分析
-                        </a>
-                    </li>
-                </ul>
+                <ul id="industry-news-list" class="space-y-3"></ul>
             </div>
             
             <!-- 板块三：重点上市公司新闻 -->
             <div class="bg-white rounded-lg shadow-lg p-6">
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-b border-gray-200 pb-2">重点上市公司新闻</h2>
-                <ul class="space-y-3">
-                    <li>
-                        <a href="https://news.google.com/search?q=华测检测+CTI&hl=zh-CN&gl=CN&ceid=CN:zh" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            华测检测 (CTI)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://news.google.com/search?q=广电计量+GRGT&hl=zh-CN&gl=CN&ceid=CN:zh" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            广电计量 (GRGT)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://news.google.com/search?q=苏试试验&hl=zh-CN&gl=CN&ceid=CN:zh" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            苏试试验
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://news.google.com/search?q=安车检测&hl=zh-CN&gl=CN&ceid=CN:zh" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            安车检测
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://news.google.com/search?q=中检集团+CCIC&hl=zh-CN&gl=CN&ceid=CN:zh" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            中检集团 (CCIC)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://news.google.com/search?q=SGS+通用公证行&hl=zh-CN&gl=CN&ceid=CN:zh" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            SGS (通用公证行)
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://news.google.com/search?q=Bureau+Veritas+必维&hl=zh-CN&gl=CN&ceid=CN:zh" target="_blank" class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors">
-                            Bureau Veritas (必维)
-                        </a>
-                    </li>
-                </ul>
+                <ul id="company-news-list" class="space-y-3"></ul>
             </div>
             
         </div>
         
         <!-- 页脚 -->
         <footer class="text-center text-gray-600 mt-8">
-            <p class="text-sm">检验检测行业信息面板 - 每日速览 | 最后更新：今日</p>
+            <p class="text-sm">检验检测行业信息面板 V2.0 - 动态RSS新闻 | 最后更新：<span id="last-update"></span></p>
         </footer>
     </div>
+
+    <script>
+        // 异步函数：获取并显示新闻
+        async function fetchAndDisplayNews(rssUrl, elementId) {
+            const listElement = document.getElementById(elementId);
+            
+            // 显示加载状态
+            listElement.innerHTML = '<li class="text-gray-500 text-sm">数据加载中...</li>';
+            
+            try {
+                // 对RSS URL进行编码
+                const encodedRssUrl = encodeURIComponent(rssUrl);
+                const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodedRssUrl}`;
+                
+                // 获取数据
+                const response = await fetch(proxyUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP错误! 状态: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.status !== 'ok') {
+                    throw new Error(`RSS解析错误: ${data.message || '未知错误'}`);
+                }
+                
+                // 清空加载状态
+                listElement.innerHTML = '';
+                
+                // 处理新闻条目（最多显示5条）
+                const items = data.items.slice(0, 5);
+                
+                if (items.length === 0) {
+                    listElement.innerHTML = '<li class="text-gray-500 text-sm">暂无新闻数据</li>';
+                    return;
+                }
+                
+                // 创建新闻列表
+                items.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <a href="${item.link}" target="_blank" 
+                           class="block text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded transition-colors text-sm">
+                            ${item.title}
+                        </a>
+                    `;
+                    listElement.appendChild(li);
+                });
+                
+            } catch (error) {
+                console.error(`获取RSS数据失败 (${elementId}):`, error);
+                listElement.innerHTML = `
+                    <li class="text-red-500 text-sm">
+                        加载失败: ${error.message}
+                    </li>
+                    <li class="text-gray-500 text-xs mt-2">
+                        请检查网络连接或稍后重试
+                    </li>
+                `;
+            }
+        }
+        
+        // 更新时间戳
+        function updateTimestamp() {
+            const now = new Date();
+            const timestamp = now.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('last-update').textContent = timestamp;
+        }
+        
+        // 页面加载完成后执行
+        window.onload = function() {
+            // 更新时间戳
+            updateTimestamp();
+            
+            // 加载各个板块的新闻
+            fetchAndDisplayNews(
+                'https://news.google.com/rss/search?q=检验检测 政策',
+                'policy-news-list'
+            );
+            
+            fetchAndDisplayNews(
+                'https://news.google.com/rss/search?q=检验检测 收并购',
+                'industry-news-list'
+            );
+            
+            fetchAndDisplayNews(
+                'https://news.google.com/rss/search?q=华测检测',
+                'company-news-list'
+            );
+        };
+        
+        // 可选：添加刷新功能
+        function refreshAllNews() {
+            updateTimestamp();
+            fetchAndDisplayNews(
+                'https://news.google.com/rss/search?q=检验检测 政策',
+                'policy-news-list'
+            );
+            fetchAndDisplayNews(
+                'https://news.google.com/rss/search?q=检验检测 收并购',
+                'industry-news-list'
+            );
+            fetchAndDisplayNews(
+                'https://news.google.com/rss/search?q=华测检测',
+                'company-news-list'
+            );
+        }
+        
+        // 可选：每30分钟自动刷新一次
+        setInterval(refreshAllNews, 30 * 60 * 1000);
+    </script>
 </body>
 </html>
