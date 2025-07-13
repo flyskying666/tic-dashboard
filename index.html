@@ -3,13 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>检验检测行业信息面板 V2.0 - 每日速览</title>
+    <title>检验检测行业信息面板 V3.0 - 每日速览</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen py-8">
     <div class="container mx-auto px-4 max-w-6xl">
         <!-- 主标题 -->
-        <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">检验检测行业信息面板 V2.0</h1>
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-6">检验检测行业信息面板 V3.0</h1>
+        
+        <!-- 控制区域 -->
+        <div class="text-center mb-8">
+            <button id="refresh-all-btn" 
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 mr-4">
+                刷新全部
+            </button>
+            <span class="text-gray-600">最后更新：<span id="last-updated" class="font-medium">--</span></span>
+        </div>
         
         <!-- 三个内容板块 -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -33,16 +42,45 @@
             <!-- 板块三：重点上市公司新闻 -->
             <div class="bg-white rounded-lg shadow-lg p-6">
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-b border-gray-200 pb-2">重点上市公司新闻</h2>
-                <ul id="company-news-list" class="space-y-3">
-                    <li class="text-gray-500 text-sm animate-pulse">数据加载中...</li>
-                </ul>
+                
+                <!-- 华测检测 -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2 border-l-4 border-blue-500 pl-3">华测检测</h3>
+                    <ul id="huace-list" class="space-y-2">
+                        <li class="text-gray-500 text-sm animate-pulse">数据加载中...</li>
+                    </ul>
+                </div>
+                
+                <!-- 广电计量 -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2 border-l-4 border-green-500 pl-3">广电计量</h3>
+                    <ul id="guangdian-list" class="space-y-2">
+                        <li class="text-gray-500 text-sm animate-pulse">数据加载中...</li>
+                    </ul>
+                </div>
+                
+                <!-- 苏试试验 -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2 border-l-4 border-purple-500 pl-3">苏试试验</h3>
+                    <ul id="sushi-list" class="space-y-2">
+                        <li class="text-gray-500 text-sm animate-pulse">数据加载中...</li>
+                    </ul>
+                </div>
+                
+                <!-- 安车检测 -->
+                <div class="mb-4">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2 border-l-4 border-orange-500 pl-3">安车检测</h3>
+                    <ul id="anche-list" class="space-y-2">
+                        <li class="text-gray-500 text-sm animate-pulse">数据加载中...</li>
+                    </ul>
+                </div>
             </div>
             
         </div>
         
         <!-- 页脚 -->
         <footer class="text-center text-gray-600 mt-8">
-            <p class="text-sm">检验检测行业信息面板 V2.0 - 动态RSS新闻 | 最后更新：<span id="last-update"></span></p>
+            <p class="text-sm">检验检测行业信息面板 V3.0 - 动态RSS新闻</p>
         </footer>
     </div>
 
@@ -53,7 +91,6 @@
          * @returns {string} 完整的RSS URL
          */
         function buildGoogleNewsURL(keyword) {
-            // 构建基础URL，避免双重编码问题
             const baseUrl = 'https://news.google.com/rss/search';
             const params = new URLSearchParams({
                 q: keyword,
@@ -68,9 +105,15 @@
          * 异步函数：获取并显示新闻
          * @param {string} keyword - 搜索关键词
          * @param {string} elementId - 目标DOM元素ID
+         * @param {number} maxItems - 最大显示条数，默认为5
          */
-        async function fetchAndDisplayNews(keyword, elementId) {
+        async function fetchAndDisplayNews(keyword, elementId, maxItems = 5) {
             const listElement = document.getElementById(elementId);
+            
+            if (!listElement) {
+                console.error(`元素 #${elementId} 未找到`);
+                return;
+            }
             
             // 显示加载状态
             listElement.innerHTML = '<li class="text-gray-500 text-sm animate-pulse">数据加载中...</li>';
@@ -86,7 +129,7 @@
                 
                 // 设置请求超时
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10秒超时
+                const timeoutId = setTimeout(() => controller.abort(), 10000);
                 
                 const response = await fetch(proxyUrl, {
                     signal: controller.signal,
@@ -111,8 +154,8 @@
                 // 清空加载状态
                 listElement.innerHTML = '';
                 
-                // 处理新闻条目（最多显示5条）
-                const items = data.items ? data.items.slice(0, 5) : [];
+                // 处理新闻条目
+                const items = data.items ? data.items.slice(0, maxItems) : [];
                 
                 if (items.length === 0) {
                     listElement.innerHTML = '<li class="text-gray-500 text-sm">暂无相关新闻数据</li>';
@@ -167,7 +210,7 @@
         }
         
         /**
-         * 更新页面时间戳
+         * 更新时间戳到指定元素
          */
         function updateTimestamp() {
             const now = new Date();
@@ -178,8 +221,9 @@
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
-            });
-            const updateElement = document.getElementById('last-update');
+            }).replace(/\//g, '-');
+            
+            const updateElement = document.getElementById('last-updated');
             if (updateElement) {
                 updateElement.textContent = timestamp;
             }
@@ -187,49 +231,92 @@
         
         /**
          * 刷新所有新闻板块
+         * 这个函数会依次为页面上所有的卡片和公司重新调用fetchAndDisplayNews
          */
         function refreshAllNews() {
             console.log('开始刷新所有新闻板块...');
+            
+            // 更新时间戳
             updateTimestamp();
             
             // 并行加载所有板块的新闻
-            Promise.allSettled([
-                fetchAndDisplayNews('检验检测 政策', 'policy-news-list'),
-                fetchAndDisplayNews('检验检测 收并购', 'industry-news-list'),
-                fetchAndDisplayNews('华测检测', 'company-news-list')
-            ]).then(results => {
+            const newsRequests = [
+                // 政策与法规板块
+                fetchAndDisplayNews('检验检测 政策', 'policy-news-list', 5),
+                
+                // 行业与收并购动态板块
+                fetchAndDisplayNews('检验检测 收并购', 'industry-news-list', 5),
+                
+                // 重点上市公司新闻
+                fetchAndDisplayNews('华测检测', 'huace-list', 3),
+                fetchAndDisplayNews('广电计量', 'guangdian-list', 3),
+                fetchAndDisplayNews('苏试试验', 'sushi-list', 3),
+                fetchAndDisplayNews('安车检测', 'anche-list', 3)
+            ];
+            
+            Promise.allSettled(newsRequests).then(results => {
                 const successful = results.filter(result => result.status === 'fulfilled').length;
                 const total = results.length;
                 console.log(`新闻加载完成: ${successful}/${total} 个板块成功`);
+                
+                // 如果有失败的请求，更新时间戳以反映最新的刷新时间
+                updateTimestamp();
             });
         }
         
-        // DOM加载完成后执行初始化
-        document.addEventListener('DOMContentLoaded', function() {
+        /**
+         * 页面初始化
+         */
+        function initializePage() {
             console.log('页面加载完成，开始初始化...');
             
-            // 更新时间戳
+            // 绑定刷新按钮事件
+            const refreshBtn = document.getElementById('refresh-all-btn');
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', () => {
+                    console.log('手动刷新触发...');
+                    refreshBtn.disabled = true;
+                    refreshBtn.textContent = '刷新中...';
+                    
+                    refreshAllNews();
+                    
+                    // 2秒后恢复按钮状态
+                    setTimeout(() => {
+                        refreshBtn.disabled = false;
+                        refreshBtn.textContent = '刷新全部';
+                    }, 2000);
+                });
+            }
+            
+            // 初始化时间戳
             updateTimestamp();
             
             // 延迟500ms后开始加载新闻，确保页面完全渲染
             setTimeout(() => {
                 refreshAllNews();
             }, 500);
-        });
+        }
         
-        // 页面可见性改变时的处理（用户切换标签页时暂停/恢复）
+        // DOM加载完成后执行初始化
+        document.addEventListener('DOMContentLoaded', initializePage);
+        
+        // 页面可见性改变时的处理
         document.addEventListener('visibilitychange', function() {
             if (!document.hidden) {
                 console.log('页面重新获得焦点，检查是否需要更新数据...');
-                // 如果页面重新获得焦点且距离上次更新超过5分钟，则刷新数据
-                const lastUpdate = document.getElementById('last-update').textContent;
-                if (lastUpdate) {
-                    const lastUpdateTime = new Date(lastUpdate.replace(/(\d{4})\/(\d{2})\/(\d{2}) (\d{2}):(\d{2}):(\d{2})/, '$1-$2-$3T$4:$5:$6'));
-                    const now = new Date();
-                    const diffMinutes = (now - lastUpdateTime) / (1000 * 60);
-                    
-                    if (diffMinutes > 5) {
-                        console.log('数据已过期，重新加载...');
+                const lastUpdate = document.getElementById('last-updated').textContent;
+                if (lastUpdate && lastUpdate !== '--') {
+                    try {
+                        const lastUpdateTime = new Date(lastUpdate.replace(/-/g, '/'));
+                        const now = new Date();
+                        const diffMinutes = (now - lastUpdateTime) / (1000 * 60);
+                        
+                        if (diffMinutes > 5) {
+                            console.log('数据已过期，重新加载...');
+                            refreshAllNews();
+                        }
+                    } catch (e) {
+                        console.log('时间解析失败，重新加载数据...');
                         refreshAllNews();
                     }
                 }
@@ -249,7 +336,7 @@
         document.addEventListener('keydown', function(event) {
             if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
                 event.preventDefault();
-                console.log('手动刷新触发...');
+                console.log('键盘快捷键刷新触发...');
                 refreshAllNews();
             }
         });
